@@ -48,3 +48,61 @@ a{
 a:hover{
   color:firebrick;
 }
+
+/* TaskDetails.css */
+
+.button-container {
+  margin-top: 10px;
+}
+
+#delete_button,
+#edit_button,
+#save_button,
+#cancel_button {
+  margin-right: 10px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+/* Edit mode styles */
+.edit-form {
+  margin-top: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Optional: Style the Save and Cancel buttons differently */
+#save_button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+}
+
+#cancel_button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+}
+
+.edit-form select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}

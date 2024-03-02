@@ -58,13 +58,14 @@ export default TaskForm;
 import React, { useState } from 'react';
 import axios from 'axios'; // Import Axios
 import './TaskForm.css';
+import { useNavigate } from 'react-router-dom';
 
-const TaskForm = ({ onCreateTask }) => {
+const TaskForm = ({}) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [due_date, setDueDate] = useState('');
   const taskData = { title, description, due_date };
-
+  const navigate=useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -105,6 +106,7 @@ const TaskForm = ({ onCreateTask }) => {
         <label htmlFor="due_date">Due Date:</label>
         <input type="date" id="due_date" value={due_date} onChange={(e) => setDueDate(e.target.value)} />
         <button type="submit">Create Task</button>
+        <button onClick={()=>{navigate('/taskList')}}>View Tasks</button>
       </form>
     </div>
   );

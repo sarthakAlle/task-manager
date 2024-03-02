@@ -1,96 +1,7 @@
-/*import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
-import './TaskDetails.css';
-
-
-const TaskDetails = () => {
-  const { id } = useParams();
-  const [task, setTask] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const navigate=useNavigate();
-  useEffect(() => {
-    const fetchTask = async () => {
-      try {
-        // Retrieve the token from local storage
-        const token = localStorage.getItem('token');
-
-        // Use Axios for the HTTP request
-        const response = await axios.get(`http://localhost:5000/tasks/${id}`, {
-          headers: {
-            'Authorization': `Bearer ${token}`, // Include the token in the Authorization header
-          },
-        });
-
-        setTask(response.data);
-        setLoading(false);
-      } catch (error) {
-        setError(error.message);
-        setLoading(false);
-      }
-    };
-
-    fetchTask();
-
-    // Cleanup function (optional)
-    return () => {
-      // Any cleanup code, if needed
-    };
-  }, [id]);
-
-  const handleDelete = async () => {
-    try {
-      // Retrieve the token from local storage
-      const token = localStorage.getItem('token');
-
-      // Use Axios for the HTTP request
-      await axios.delete(`http://localhost:5000/tasks/${id}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`, // Include the token in the Authorization header
-        },
-      });
-
-      // Handle successful deletion (e.g., redirect or show a success message)
-      alert('Task deleted successfully');
-      navigate('/taskList');
-    } catch (error) {
-      console.error('Error deleting task:', error);
-    }
-  };
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
-  return (
-    <div className='card'>
-      <h3>{task.title}</h3>
-      <p>{task.description}</p>
-      {task.due_date && (
-        <p>Due Date: {new Date(task.due_date).toLocaleDateString()}</p>
-      )}
-      <p>Status: {task.status}</p>
-      <div className='button-container'>
-        <button id="delete_button" onClick={handleDelete}>Delete</button>
-        <button id="edit_button">Edit</button>
-      </div>
-    </div>
-  );
-};
-
-export default TaskDetails;
-
-*/
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import './TaskDetails.css';
-
 
 const TaskDetails = () => {
   const { id } = useParams();
@@ -128,10 +39,15 @@ const TaskDetails = () => {
     return () => {
       // Any cleanup code, if needed
     };
-  }, [task,id]);
+  }, [id, editMode]);
 
-  const handleDelete = async () => {
-    try {
+const handleDelete = async () => {
+  try {
+    // Ask for confirmation before proceeding
+    const isConfirmed = window.confirm('Are you sure you want to delete this task?');
+
+    // If the user confirms, proceed with the deletion
+    if (isConfirmed) {
       // Retrieve the token from local storage
       const token = localStorage.getItem('token');
 
@@ -145,10 +61,12 @@ const TaskDetails = () => {
       // Handle successful deletion (e.g., redirect or show a success message)
       alert('Task deleted successfully');
       navigate('/taskList');
-    } catch (error) {
-      console.error('Error deleting task:', error);
     }
-  };
+    // If the user cancels, do nothing
+  } catch (error) {
+    console.error('Error deleting task:', error);
+  }
+};
 
   const handleEdit = async () => {
     try {
@@ -180,6 +98,7 @@ const TaskDetails = () => {
 
   const toggleEditMode = () => {
     setEditMode(!editMode);
+
     // Set initial values for the updated task data
     setUpdatedTaskData({
       title: task.title,
@@ -217,10 +136,6 @@ const TaskDetails = () => {
         )}
       </div>
 
-   
-
-
-
       {editMode && (
         <div className="edit-form">
           <label htmlFor="edit_title">Title:</label>
@@ -247,13 +162,15 @@ const TaskDetails = () => {
             onChange={handleInputChange}
           />
           <label htmlFor="edit_status">Status:</label>
-          <input
-            type="text"
+          <select
             id="edit_status"
             name="status"
             value={updatedTaskData.status}
             onChange={handleInputChange}
-          />
+          >
+            <option value="pending">Pending</option>
+            <option value="completed">Completed</option>
+          </select>
         </div>
       )}
     </div>
@@ -261,6 +178,5 @@ const TaskDetails = () => {
 };
 
 export default TaskDetails;
-
 
 

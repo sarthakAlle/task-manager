@@ -30,6 +30,7 @@
     padding: 10px 20px; /* Button padding */
     border-radius: 5px; /* Rounded corners for button */
     cursor: pointer; /* Indicate clickable behavior */
+    margin: 5px;
   }
   .task-form textarea{
     max-width: 90%;
