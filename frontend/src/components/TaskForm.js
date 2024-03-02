@@ -54,6 +54,7 @@ const TaskForm = ({ onCreateTask }) => {
 };
 
 export default TaskForm;
+
 */
 import React, { useState } from 'react';
 import axios from 'axios'; // Import Axios
@@ -86,6 +87,7 @@ const TaskForm = ({}) => {
       if (response.status === 201) {
         // Handle successful task creation (e.g., show a success message)
         console.log('Task created successfully');
+        navigate('/taskList');
       } else {
         // Handle errors from the server
         console.error('Failed to create task');

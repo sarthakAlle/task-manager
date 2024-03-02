@@ -30,6 +30,7 @@ app.post('/tasks',isAuth, async (req, res) => {
   }
 });
 
+/*
 app.get('/taskList',isAuth, async (req, res) => {
   try {
     const tasks = await Task.find();
@@ -38,6 +39,33 @@ app.get('/taskList',isAuth, async (req, res) => {
     res.status(500).send(error.message); // 500 Internal Server Error
   }
 });
+*/
+ // Import your Task model
+
+app.get('/taskList', isAuth, async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const perPage = parseInt(req.query.per_page) || 10; // Default to 10 items per page
+
+    const totalTasks = await Task.countDocuments();
+    const totalPages = Math.ceil(totalTasks / perPage);
+
+    const tasks = await Task.find()
+      .skip((page - 1) * perPage)
+      .limit(perPage);
+
+    res.send({
+      tasks,
+      page,
+      per_page: perPage,
+      total: totalTasks,
+      total_pages: totalPages,
+    });
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
 
 app.get('/tasks/:id',isAuth, async (req, res) => {
   try {
