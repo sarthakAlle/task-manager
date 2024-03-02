@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt'); // For password hashing
 const jwt = require('jsonwebtoken'); // For JWT generation and verification
 const User = require('./UserSchema');
-
+const {isAuth}=require('./middleware/authMiddleware');
 
 
 
@@ -20,7 +20,7 @@ app.use(express.urlencoded({extended:true}));
 app.use(express.json())
 
 //task controllers
-app.post('/tasks', async (req, res) => {
+app.post('/tasks',isAuth, async (req, res) => {
   try {
     const newTask = new Task(req.body);
     await newTask.save();
@@ -30,7 +30,7 @@ app.post('/tasks', async (req, res) => {
   }
 });
 
-app.get('/taskList', async (req, res) => {
+app.get('/taskList',isAuth, async (req, res) => {
   try {
     const tasks = await Task.find();
     res.send(tasks);
@@ -39,7 +39,7 @@ app.get('/taskList', async (req, res) => {
   }
 });
 
-app.get('/tasks/:id', async (req, res) => {
+app.get('/tasks/:id',isAuth, async (req, res) => {
   try {
     const task = await Task.findById(req.params.id);
     if (!task) {
@@ -51,7 +51,7 @@ app.get('/tasks/:id', async (req, res) => {
   }
 });
 
-app.put('/tasks/:id', async (req, res) => {
+app.put('/tasks/:id',isAuth, async (req, res) => {
   try {
     const updatedTask = await Task.findByIdAndUpdate(
       req.params.id,
@@ -67,7 +67,7 @@ app.put('/tasks/:id', async (req, res) => {
   }
 });
 
-app.delete('/tasks/:id', async (req, res) => {
+app.delete('/tasks/:id',isAuth, async (req, res) => {
   try {
     const deletedTask = await Task.findByIdAndDelete(req.params.id);
     if (!deletedTask) {
@@ -86,7 +86,7 @@ app.get('/', (req, res) => {
   });
 
 
-app.put('/tasks/:id/status', async (req, res) => {
+app.put('/tasks/:id/status',isAuth, async (req, res) => {
   try {
     const { status } = req.body; // Extract "status" property
 

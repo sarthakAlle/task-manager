@@ -1,29 +1,33 @@
 /*import React, { useState } from 'react';
-import { Task } from './Tasks';
 import './TaskForm.css';
 
-const TaskForm =({ }) => {
+const TaskForm = ({ onCreateTask }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [due_date, setDueDate] = useState('');
-  const taskData = { title, description,due_date };
+  const taskData = { title, description, due_date };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
- 
+
     try {
-      
+      // Retrieve the token from local storage
+      const token = localStorage.getItem('token');
+
       const response = await fetch('http://localhost:5000/tasks', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`, // Include the token in the Authorization header
         },
-        body: JSON.stringify(taskData)
+        body: JSON.stringify(taskData),
       });
+
+      console.log(response);
 
       if (response.ok) {
         // Handle successful task creation (e.g., show a success message)
         console.log('Task created successfully');
-
       } else {
         // Handle errors from the server
         console.error('Failed to create task');
@@ -33,7 +37,6 @@ const TaskForm =({ }) => {
       console.error('Network error:', error);
     }
   };
-
 
   return (
     <div className="task-form">
@@ -53,28 +56,33 @@ const TaskForm =({ }) => {
 export default TaskForm;
 */
 import React, { useState } from 'react';
-import { Task } from './Tasks';
+import axios from 'axios'; // Import Axios
 import './TaskForm.css';
 
 const TaskForm = ({ onCreateTask }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [due_date, setDueDate] = useState(''); // Changed due_date to dueDate for consistency
-  const taskData = { title, description, due_date }; // Changed due_date to dueDate for consistency
+  const [due_date, setDueDate] = useState('');
+  const taskData = { title, description, due_date };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
-   
-      const response = await fetch('http://localhost:5000/tasks', {
-        method: 'POST',
+      // Retrieve the token from local storage
+      const token = localStorage.getItem('token');
+
+      // Use Axios for the HTTP request
+      const response = await axios.post('http://localhost:5000/tasks', taskData, {
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`, // Include the token in the Authorization header
         },
-        body: JSON.stringify(taskData)
       });
+
       console.log(response);
-      if (response.ok) {
+
+      if (response.status === 201) {
         // Handle successful task creation (e.g., show a success message)
         console.log('Task created successfully');
       } else {
