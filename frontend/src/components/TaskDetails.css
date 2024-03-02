@@ -1,0 +1,50 @@
+.card {
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin:10vh auto;
+    width: 300px;
+  }
+  
+  .card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .card p {
+    margin-bottom: 5px;
+  }
+  .button-container{
+    display: flex;
+    justify-content: center;
+  }
+  
+  .button-container button{
+    margin: 5px;
+    border-radius: 7px;
+    border: none;
+    padding: 5px;
+  }
+  #delete_button{
+background-color: bisque;
+  }
+#edit_button{
+    background-color: aqua;
+  }
+  #delete_button:hover{
+    background-color: red;
+  }
+  #edit_button:hover{
+    background-color: cornflowerblue;
+  }
+
+a{
+  text-decoration: none;
+  color: black;
+  margin: 5px;
+}
+
+a:hover{
+  color:firebrick;
+}

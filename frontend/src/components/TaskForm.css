@@ -1,0 +1,41 @@
+.task-form {
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Arrange elements vertically */
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px; /* Inner padding */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    width: 300px; /* Adapts to content width */
+    margin: 40px auto; /* Center the form horizontally */
+  }
+  
+  .task-form label {
+    margin-bottom: 5px; /* Add spacing for labels */
+    display: block; /* Make labels full width */
+  }
+  
+  .task-form input,
+  .task-form textarea,
+  .task-form select {
+    width: 80%; /* Make input elements full width */
+    padding: 10px; /* Add padding for easy typing */
+    border: 1px solid #ddd; /* Basic border */
+    border-radius: 5px; /* Slightly rounded corners for inputs */
+    margin: 7px auto; /* Add spacing between elements */
+  }
+  
+  .task-form button {
+    background-color: #007bff; /* Blue button color */
+    color: white; /* White text */
+    border: none; /* No border */
+    padding: 10px 20px; /* Button padding */
+    border-radius: 5px; /* Rounded corners for button */
+    cursor: pointer; /* Indicate clickable behavior */
+  }
+  .task-form textarea{
+    max-width: 90%;
+  }
+  @media screen and (max-width:'400px'){
+    .task-form {
+      width: 90vw; 
+    }
+  }
