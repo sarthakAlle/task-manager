@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-
+const User=require("../UserSchema")
 exports.isAuth = async (req, res, next) => {
   try {
     // Assuming the token is stored in the 'Authorization' header as a Bearer token
@@ -13,7 +13,8 @@ exports.isAuth = async (req, res, next) => {
 
     const decoded = await jwt.verify(token,'your-secret-key');
 
-  //  req.user = await User.findById(decoded.id);
+    req.user = await User.findById(decoded.userId);
+   
     next();
   } catch (error) {
     res.status(500).json({

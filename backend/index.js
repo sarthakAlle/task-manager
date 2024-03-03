@@ -20,6 +20,7 @@ app.use(express.urlencoded({extended:true}));
 app.use(express.json())
 
 //task controllers
+/*
 app.post('/tasks',isAuth, async (req, res) => {
   try {
     const newTask = new Task(req.body);
@@ -29,28 +30,37 @@ app.post('/tasks',isAuth, async (req, res) => {
     res.status(400).send(error.message); // 400 Bad Request
   }
 });
+*/
 
-/*
-app.get('/taskList',isAuth, async (req, res) => {
+app.post('/tasks', isAuth, async (req, res) => {
   try {
-    const tasks = await Task.find();
-    res.send(tasks);
+  
+    const { title, description, due_date } = req.body;
+    const newTask = new Task({
+      userId: req.user.userId,
+      title,
+      description,
+      due_date,
+    });
+
+    await newTask.save();
+    res.status(201).send(newTask); // 201 Created
   } catch (error) {
-    res.status(500).send(error.message); // 500 Internal Server Error
+    console.error(error);
+    res.status(400).send(error.message); // 400 Bad Request
   }
 });
-*/
- // Import your Task model
+
 
 app.get('/taskList', isAuth, async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const perPage = parseInt(req.query.per_page) || 10; // Default to 10 items per page
 
-    const totalTasks = await Task.countDocuments();
+    const totalTasks = await Task.countDocuments({ userId: req.user.userId });
     const totalPages = Math.ceil(totalTasks / perPage);
 
-    const tasks = await Task.find()
+    const tasks = await Task.find({ userId: req.user.userId })
       .skip((page - 1) * perPage)
       .limit(perPage);
 
@@ -148,6 +158,8 @@ app.put('/tasks/:id/status',isAuth, async (req, res) => {
 
 
 // Signup endpoint
+
+
 app.post('/signup', async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -158,14 +170,12 @@ app.post('/signup', async (req, res) => {
       return res.status(400).json({ error: 'Email is already registered.' });
     }
 
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Create a new user
+    // Create a new user with a unique userId
     const newUser = new User({
+      userId: new mongoose.Types.ObjectId(), // Use the new keyword here
       username,
       email,
-      password: hashedPassword,
+      password: await bcrypt.hash(password, 10), // Hash the password
     });
 
     // Save the user to the database
@@ -177,6 +187,7 @@ app.post('/signup', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
 
 //login endpoint 
 app.post('/login', async (req, res) => {
