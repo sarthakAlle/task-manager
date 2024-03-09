@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const User=require("../UserSchema")
+require('dotenv').config();
 exports.isAuth = async (req, res, next) => {
   try {
     // Assuming the token is stored in the 'Authorization' header as a Bearer token
@@ -11,7 +12,7 @@ exports.isAuth = async (req, res, next) => {
       });
     }
 
-    const decoded = await jwt.verify(token,'your-secret-key');
+    const decoded = await jwt.verify(token,process.env.JWT_SECRET_KEY);
 
     req.user = await User.findById(decoded.userId);
    

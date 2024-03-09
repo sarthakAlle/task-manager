@@ -85,28 +85,28 @@ const TaskList = () => {
 
   return (
     <>
-    <div >
-      <ul>
-        {taskList.tasks && taskList.tasks.map((task) => (
-          <div key={task._id} className='card'>
-            <h3>{task.title}</h3>
-            {task.due_date && <p>Due Date: {new Date(task.due_date).toLocaleDateString()}</p>}
-            <p>Status: {task.status}</p>
-            <Link to={`/taskDetails/${task._id}`}>view details</Link>
-          </div>
-        ))}
-      </ul>
-    </div>
-    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
          <ReactPaginate
          previousLabel="Previous"
          nextLabel="Next"
-         pageCount={Math.ceil(taskList.total / itemsPerPage)}
+         pageCount={(Math.ceil(taskList.total / itemsPerPage))}
          onPageChange={({ selected }) => setCurrentPage(selected)}
          containerClassName="pagination"
          activeClassName="active"
        />
 </div>
+    <div className='grid'>
+  
+        {taskList.tasks && taskList.tasks.map((task) => (
+          <div key={task._id} className='card'>
+            <h3>{task.title}</h3>
+            {task.due_date && <p>Due Date: {new Date(task.due_date).toLocaleDateString()}</p>}
+            <p>Status: {task.status}</p>
+            <Link to={`/tasks/${task._id}`}>view details</Link>
+          </div>
+        ))}
+
+    </div>
        </>
   );
 };

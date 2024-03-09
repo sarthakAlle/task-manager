@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import axios from 'axios';
 import './Login.css';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../AuthContext';
 
 const Login = () => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const navigate =useNavigate();
+  const { login } = useAuth();
+
+
   const handleLogin = async () => {
  
     try {
@@ -21,8 +24,10 @@ const Login = () => {
       localStorage.setItem('token', token);
 
       // Redirect or perform other actions after successful login
-      navigate('/taskForm')
+      login();
+      navigate('/userprofile');
     } catch (error) {
+      alert("user dosen't exists ,please sign up first");
      console.log(error);
     }
   };

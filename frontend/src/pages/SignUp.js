@@ -9,22 +9,32 @@ const SignUp = () => {
   const navigate =useNavigate();
 
   const handleSignUp = async () => {
-    
     try {
       // Add validation logic if needed (e.g., checking if passwords match)
   
-      
       const response = await axios.post('http://localhost:5000/signup', {
         username,
         email,
         password,
       });
+  
       console.log(response);
-      navigate('/login');
+  
+      // Assuming your server returns a specific status code (e.g., 409) for user already exists
+      if (response.status === 409) {
+        // Show an alert or handle the user already exists scenario
+        alert('User already exists. Please login.');
+        // You can also redirect to the login page or do something else
+        navigate('/login');
+      } else {
+        // User created successfully, navigate to the login page
+        navigate('/login');
+      }
     } catch (error) {
-    console.log(error);
+      console.error(error);
     }
   };
+  
 
   return (
 <div className="signup-form">

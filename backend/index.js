@@ -3,13 +3,13 @@ const bodyParser = require('body-parser');
 const { connectDB} = require('./db');
 const Task = require('./models');
 const port = 5000;
-const cors=require("cors")
+const cors=require('cors')
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt'); // For password hashing
 const jwt = require('jsonwebtoken'); // For JWT generation and verification
 const User = require('./UserSchema');
 const {isAuth}=require('./middleware/authMiddleware');
-
+require('dotenv').config();
 
 
 connectDB();
@@ -31,6 +31,27 @@ app.post('/tasks',isAuth, async (req, res) => {
   }
 });
 */
+app.get('/userprofile', isAuth, async (req, res) => {
+  try {
+    // req.user is set by the isAuth middleware
+    const userId = req.user;
+  //console.log(userId);
+    
+    // Fetch user data from the database
+    /*
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+*/
+    // Send user data to the frontend
+    res.json(userId);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
 
 app.post('/tasks', isAuth, async (req, res) => {
   try {
@@ -207,7 +228,7 @@ app.post('/login', async (req, res) => {
     }
 
     // Create and sign a JWT token
-    const token = jwt.sign({ userId: user._id }, 'your-secret-key', { expiresIn: '1h' });
+    const token = jwt.sign({ userId: user._id },process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
 
     res.status(200).json({ token });
   } catch (error) {
