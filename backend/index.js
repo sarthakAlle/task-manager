@@ -13,18 +13,14 @@ require('dotenv').config();
 const port = process.env.PORT || 5000; 
 
 connectDB();
+const corsConfig={
+  origin:"*",
+  credential:true
+};
+// Use cors middleware to handle CORS headers
+app.use(cors(corsConfig));
+app.options("",cors(corsConfig));
 const app = express();
-const allowedOrigins = ['*'];
-
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  }
-}));
 
 app.use(express.urlencoded({extended:true}));
 
