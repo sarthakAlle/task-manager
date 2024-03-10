@@ -14,7 +14,7 @@ const UserProfile = () => {
           return;
         }
         // Make an API request to fetch user data
-        const response = await fetch('http://localhost:5000/userprofile', {
+        const response = await fetch('https://task-manager-r0r9.onrender.com/userprofile', {
           method:"GET",
           headers: {
             Authorization: `Bearer ${authToken}`, // Include the authentication token

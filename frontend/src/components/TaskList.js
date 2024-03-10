@@ -56,7 +56,7 @@ import { Link } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import './TaskDetails.css';
 import './TaskList.css';
-const apiUrl = 'http://localhost:5000/taskList';
+const apiUrl = 'https://task-manager-r0r9.onrender.com/taskList';
 
 const TaskList = () => {
   const [taskList, setTaskList] = useState({ tasks: [] }); // Initialize taskList as an object with a tasks property

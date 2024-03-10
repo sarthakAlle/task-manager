@@ -19,7 +19,7 @@ const TaskDetails = () => {
         const token = localStorage.getItem('token');
 
         // Use Axios for the HTTP request
-        const response = await axios.get(`http://localhost:5000/tasks/${id}`, {
+        const response = await axios.get(`https://task-manager-r0r9.onrender.com/tasks/${id}`, {
           headers: {
             'Authorization': `Bearer ${token}`, // Include the token in the Authorization header
           },
@@ -52,7 +52,7 @@ const handleDelete = async () => {
       const token = localStorage.getItem('token');
 
       // Use Axios for the HTTP request
-      await axios.delete(`http://localhost:5000/tasks/${id}`, {
+      await axios.delete(`https://task-manager-r0r9.onrender.com/tasks/${id}`, {
         headers: {
           'Authorization': `Bearer ${token}`, // Include the token in the Authorization header
         },
@@ -74,7 +74,7 @@ const handleDelete = async () => {
       const token = localStorage.getItem('token');
 
       // Use Axios for the HTTP request
-      await axios.put(`http://localhost:5000/tasks/${id}`, updatedTaskData, {
+      await axios.put(`https://task-manager-r0r9.onrender.com/tasks/${id}`, updatedTaskData, {
         headers: {
           'Authorization': `Bearer ${token}`, // Include the token in the Authorization header
         },

@@ -12,7 +12,7 @@ const SignUp = () => {
     try {
       // Add validation logic if needed (e.g., checking if passwords match)
   
-      const response = await axios.post('http://localhost:5000/signup', {
+      const response = await axios.post('https://task-manager-r0r9.onrender.com/signup', {
         username,
         email,
         password,

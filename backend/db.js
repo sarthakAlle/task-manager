@@ -4,12 +4,11 @@ require('dotenv').config();
 
 const connectDB = async () => {
   try {
-   // const uri = "mongodb://localhost:27017/task_manager"; // Replace with your actual connection string
+
     const uri=process.env.MONGO_URI;
     const options = {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      // Add additional options here if needed (e.g., auth information)
     };
 
 
