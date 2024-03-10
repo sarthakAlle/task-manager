@@ -134,8 +134,11 @@ const TaskForm = () => {
 
     try {
       // Retrieve the token from local storage
+      if(!taskData.due_date){
+        alert('please select a date');
+      }
       const token = localStorage.getItem('token');
-
+      
       // Log the task data before making the request
       console.log('Task Data:', taskData);
 

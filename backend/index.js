@@ -5,7 +5,8 @@ const Task = require('./models');
 const port = 5000;
 const cors=require('cors')
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt'); // For password hashing
+//const bcrypt = require('bcrypt'); // For password hashing
+const argon2 = require('argon2');
 const jwt = require('jsonwebtoken'); // For JWT generation and verification
 const User = require('./UserSchema');
 const {isAuth}=require('./middleware/authMiddleware');
@@ -180,7 +181,7 @@ app.put('/tasks/:id/status',isAuth, async (req, res) => {
 
 // Signup endpoint
 
-
+/*
 app.post('/signup', async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -229,6 +230,64 @@ app.post('/login', async (req, res) => {
 
     // Create and sign a JWT token
     const token = jwt.sign({ userId: user._id },process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
+
+    res.status(200).json({ token });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+*/
+
+// Signup
+app.post('/signup', async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
+
+    // Check if the email is already registered
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ error: 'Email is already registered.' });
+    }
+
+    // Create a new user with a unique userId
+    const hashedPassword = await argon2.hash(password); // Hash the password using Argon2
+    const newUser = new User({
+      userId: new mongoose.Types.ObjectId(),
+      username,
+      email,
+      password: hashedPassword,
+    });
+
+    // Save the user to the database
+    await newUser.save();
+
+    res.status(201).json({ message: 'Signup successful.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// Login
+app.post('/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Check if the email exists
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid credentials.' });
+    }
+
+    // Compare the provided password with the hashed password in the database using Argon2
+    const passwordMatch = await argon2.verify(user.password, password);
+    if (!passwordMatch) {
+      return res.status(401).json({ error: 'Invalid credentials.' });
+    }
+
+    // Create and sign a JWT token
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
 
     res.status(200).json({ token });
   } catch (error) {
