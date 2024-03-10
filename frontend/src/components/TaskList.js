@@ -96,7 +96,6 @@ const TaskList = () => {
        />
 </div>
     <div className='grid'>
-  
         {taskList.tasks && taskList.tasks.map((task) => (
           <div key={task._id} className='card'>
             <h3>{task.title}</h3>
