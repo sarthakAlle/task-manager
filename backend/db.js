@@ -12,7 +12,7 @@ const connectDB = async () => {
       // Add additional options here if needed (e.g., auth information)
     };
 
-    // Enable logging for connection events
+
     mongoose.connection.on('error', (error) => {
       console.error('MongoDB connection error:', error.message);
       process.exit(1); // Exit on connection error
