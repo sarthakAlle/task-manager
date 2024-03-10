@@ -14,7 +14,7 @@ const port = process.env.PORT || 5000;
 
 connectDB();
 const app = express();
-const allowedOrigins = ['https://task-manager-r0r9.onrender.com'];
+const allowedOrigins = ['*'];
 
 app.use(cors({
   origin: function (origin, callback) {
