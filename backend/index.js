@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { connectDB} = require('./db');
 const Task = require('./models');
-const port = 5000;
 const cors=require('cors')
 const mongoose = require('mongoose');
 //const bcrypt = require('bcrypt'); // For password hashing
@@ -11,7 +10,7 @@ const jwt = require('jsonwebtoken'); // For JWT generation and verification
 const User = require('./UserSchema');
 const {isAuth}=require('./middleware/authMiddleware');
 require('dotenv').config();
-
+const port = process.env.PORT || 5000; 
 
 connectDB();
 const app = express();
