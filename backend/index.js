@@ -11,6 +11,7 @@ const User = require('./UserSchema');
 const {isAuth}=require('./middleware/authMiddleware');
 require('dotenv').config();
 const port = process.env.PORT || 5000; 
+const app = express();
 
 connectDB();
 const corsConfig={
@@ -20,7 +21,6 @@ const corsConfig={
 // Use cors middleware to handle CORS headers
 app.use(cors(corsConfig));
 app.options("",cors(corsConfig));
-const app = express();
 
 app.use(express.urlencoded({extended:true}));
 
