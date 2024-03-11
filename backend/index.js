@@ -14,20 +14,22 @@ const port = process.env.PORT || 5000;
 const app = express();
 
 connectDB();
-const corsConfig={
-  origin:"*",
-  credential:true,
-  optionSuccessStatus:200,
-};
-// Use cors middleware to handle CORS headers
-app.use(cors(corsConfig));
-//app.options("",cors(corsConfig));
-app.options("/", (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  res.sendStatus(204);
+
+// const corsConfig={
+//   origin:"*",
+//   credential:true,
+//   optionSuccessStatus:200,
+// };
+// // Use cors middleware to handle CORS headers
+// app.use(cors(corsConfig));
+// //app.options("",cors(corsConfig));
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
 });
+
 app.use(express.urlencoded({extended:true}));
 
 app.use(express.json())
