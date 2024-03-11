@@ -15,7 +15,7 @@ const app = express();
 
 connectDB();
 const corsConfig={
-  origin:"http://localhost:3000",
+  origin:"*",
   credential:true
 };
 // Use cors middleware to handle CORS headers

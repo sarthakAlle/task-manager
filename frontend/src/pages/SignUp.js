@@ -8,6 +8,7 @@ const SignUp = () => {
   const [email, setEmail] = useState('');
   const navigate =useNavigate();
 
+  /*
   const handleSignUp = async () => {
     try {
       // Add validation logic if needed (e.g., checking if passwords match)
@@ -32,6 +33,41 @@ const SignUp = () => {
       }
     } catch (error) {
       console.error(error);
+    }
+  };
+  */
+  const handleSignUp = async () => {
+    try {
+      const response = await axios.post(
+        'https://task-manager-r0r9.onrender.com/signup',
+        {
+          username,
+          email,
+          password,
+        },
+        {
+          withCredentials: true, // Enable sending cookies and authentication headers
+          headers: {
+            'Content-Type': 'application/json', // Set content type to JSON
+          },
+        }
+      );
+  
+      console.log(response);
+  
+      if (response.status === 200 || response.status === 201) {
+        // User created successfully, navigate to the login page
+        alert('Signup successful. Please login.');
+        // You can also redirect to the login page or do something else
+        navigate('/login');
+      } else {
+        // Handle other status codes or error scenarios
+        console.error('Signup failed:', response.data); // Log the response data for debugging
+        alert('Signup failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error during signup:', error);
+      alert('An error occurred during signup. Please try again.');
     }
   };
   
