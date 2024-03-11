@@ -49,6 +49,7 @@ const SignUp = () => {
           withCredentials: true, // Enable sending cookies and authentication headers
           headers: {
             'Content-Type': 'application/json', // Set content type to JSON
+            'Access-Control-Allow-Origin':'true'
           },
         }
       );

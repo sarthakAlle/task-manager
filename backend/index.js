@@ -20,7 +20,7 @@ const corsConfig={
 };
 // Use cors middleware to handle CORS headers
 app.use(cors(corsConfig));
-//app.options("",cors(corsConfig));
+app.options(true,cors(corsConfig));
 
 app.use(express.urlencoded({extended:true}));
 
