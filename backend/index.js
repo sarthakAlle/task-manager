@@ -22,9 +22,12 @@ const corsConfig={
 // Use cors middleware to handle CORS headers
 app.use(cors(corsConfig));
 //app.options("",cors(corsConfig));
-app.use(cors({
-  origin: 'https://task-manager-r0r9.onrender.com'
-}));
+app.options("/", (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.sendStatus(204);
+});
 app.use(express.urlencoded({extended:true}));
 
 app.use(express.json())
