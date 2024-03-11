@@ -15,9 +15,6 @@ exports.isAuth = async (req, res, next) => {
     const decoded = await jwt.verify(token,process.env.JWT_SECRET_KEY);
 
     req.user = await User.findById(decoded.userId);
-
-      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000'); // Replace with your frontend origin
-      res.setHeader('Access-Control-Allow-Credentials', true);
     
     next();
   } catch (error) {
