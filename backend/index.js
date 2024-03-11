@@ -15,14 +15,14 @@ const app = express();
 
 connectDB();
 
-// const corsConfig={
-//   origin:"*",
-//   credential:true,
-//   optionSuccessStatus:200,
-// };
-// // Use cors middleware to handle CORS headers
-// app.use(cors(corsConfig));
-// //app.options("",cors(corsConfig));
+const corsConfig={
+  origin:"*",
+  credential:true,
+  optionSuccessStatus:200,
+};
+// Use cors middleware to handle CORS headers
+app.use(cors(corsConfig));
+//app.options("",cors(corsConfig));
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
