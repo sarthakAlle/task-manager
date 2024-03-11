@@ -22,7 +22,9 @@ const corsConfig={
 // Use cors middleware to handle CORS headers
 app.use(cors(corsConfig));
 //app.options("",cors(corsConfig));
-
+app.use(cors({
+  origin: 'https://task-manager-r0r9.onrender.com'
+}));
 app.use(express.urlencoded({extended:true}));
 
 app.use(express.json())
