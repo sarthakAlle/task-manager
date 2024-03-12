@@ -15,7 +15,7 @@ const app = express();
 
 connectDB();
 app.use(cors());
-app.use((req, res, next) => {
+const header_middleware=app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   next();
 });
@@ -284,7 +284,7 @@ app.post('/signup', async (req, res) => {
 });
 
 // Login
-app.post('/login', async (req, res) => {
+app.post('/login',header_middleware, async (req, res) => {
   try {
     const { email, password } = req.body;
 
