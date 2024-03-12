@@ -14,8 +14,13 @@ const port = process.env.PORT || 5000;
 const app = express();
 
 connectDB();
-app.use(cors());
-const header_middleware=app.use((req, res, next) => {
+app.use(cors({
+  origin: 'http://localhost:3000',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 204,
+}));
+app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   next();
 });
@@ -284,7 +289,7 @@ app.post('/signup', async (req, res) => {
 });
 
 // Login
-app.post('/login',header_middleware, async (req, res) => {
+app.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
 
