@@ -11,19 +11,15 @@ const User = require('./UserSchema');
 const {isAuth}=require('./middleware/authMiddleware');
 require('dotenv').config();
 const port = process.env.PORT || 5000; 
-const app = express();
 
 connectDB();
-app.use(cors({
-  origin: 'http://localhost:3000',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true,
-  optionsSuccessStatus: 204,
-}));
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  next();
-});
+const express = require("express");
+const app = express();
+const cors = require("cors");
+const corsOptions = {
+  origin: /\.onrender\.com$/,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",};
+app.use(cors(corsOptions));
 /*
 const corsConfig={
   origin:"*",
