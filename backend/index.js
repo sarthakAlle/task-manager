@@ -14,6 +14,11 @@ const port = process.env.PORT || 5000;
 const app = express();
 
 connectDB();
+app.use(cors());
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  next();
+});
 /*
 const corsConfig={
   origin:"*",
@@ -25,12 +30,9 @@ const corsConfig={
 //app.options("",cors(corsConfig));
 
 app.use(express.urlencoded({extended:true}));
-app.use(cors());
+
 app.use(express.json())
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  next();
-});
+
 
 //task controllers
 /*
