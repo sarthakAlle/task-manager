@@ -15,9 +15,13 @@ connectDB();
 
 const app = express();
 const cors = require("cors");
-app.use(cors());
-app.use(express.urlencoded({extended:true}));
 
+app.use(express.urlencoded({extended:true}));
+app.use(cors({
+  origin:'http://localhost:3000',
+  credentials:true,
+  methods:['GET','PUT','POST','DELETE']
+}));
 app.use(express.json())
 
 
