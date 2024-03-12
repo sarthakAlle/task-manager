@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { connectDB} = require('./db');
 const Task = require('./models');
-const cors=require('cors')
 const mongoose = require('mongoose');
 //const bcrypt = require('bcrypt'); // For password hashing
 const argon2 = require('argon2');
