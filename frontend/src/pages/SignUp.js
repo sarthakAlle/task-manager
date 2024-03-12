@@ -36,6 +36,7 @@ const SignUp = () => {
     }
   };
   */
+ 
   const handleSignUp = async () => {
     try {
       const response = await axios.post(
@@ -49,7 +50,6 @@ const SignUp = () => {
           withCredentials: true, // Enable sending cookies and authentication headers
           headers: {
             'Content-Type': 'application/json', // Set content type to JSON
-            'Access-Control-Allow-Origin':'true'
           },
         }
       );
@@ -72,7 +72,45 @@ const SignUp = () => {
     }
   };
   
-
+/*
+  const handleSignUp = async () => {
+    try {
+      const response = await axios.post(
+        'https://task-manager-r0r9.onrender.com/signup',
+        {
+          username,
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+  
+      // Log the entire response for debugging
+      console.log('Server Response:', response);
+  
+      // Extract headers from the response
+      const responseHeaders = response.headers;
+      console.log('Response Headers:', responseHeaders);
+  
+      if (response.status === 200 || response.status === 201) {
+        alert('Signup successful. Please login.');
+        navigate('/login');
+      } else {
+        console.error('Signup failed:', response.data);
+        alert('Signup failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error during signup:', error);
+      alert('An error occurred during signup. Please try again.');
+    }
+  };
+  */
+  
   return (
 <div className="signup-form">
   <h2>Sign Up</h2>
